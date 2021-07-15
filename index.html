@@ -5,22 +5,35 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Portfolio</title>
+    <style>
+        body{
+            max-width: 100%;
+            background-color: gray;
+        }
+        .main{
+            text-align: center;
+            display: flex;
+        }
+    </style>
 </head>
 <body>
+<div class="main">
+    <div  id="mainContainer"  style="padding: 40px;">
+        <img
+            height="100"
+            width="100"
+            id="profileImage"
+        >
+        <h1 id="fullName"></h1>
+        <h2 id= "followersInformation"></h2>
+        <p id="bio"></p>
+        check me on <a id="githubLink">GitHub</a>
+    </div>
+    <div id="mainContainer" style="padding: 40px;">
+        <h1>Repo Detail</h1>        
+        <p id="repo_detail"  justify-content="center"></p>
+    </div>
 
-<div id="loading">
-    loading.....
-</div>
-<div class="main" id="mainContainer" hidden>
-    <img
-        height="100"
-        width="100"
-        id="profileImage"
-    >
-    <h1 id="fullName"></h1>
-    <h2 id= "followersInformation"></h2>
-    <p id="bio"></p>
-    check me on <a id="githubLink">GitHub</a>
 </div>
 <script>
     fetch("https://api.github.com/users/iddiamin96")
@@ -34,12 +47,16 @@
         document.getElementById('fullName').textContent = data['name']
         document.getElementById('bio').textContent = data['bio']
         document.getElementById('followersInformation').textContent = followersInfo
-        document.getElementById('githubLink').href = data['html_url']
-
-        document.getElementById('mainContainer').hidden =false
-        document.getElementById('loading').hidden =true
-
+        document.getElementById('githubLink').href = data['html_url']   
     })
+    fetch("https://api.github.com/users/iddiamin96/repos")
+    .then(response => response.json())
+    .then(function(data){
+        console.log(data)
+        document.getElementById('repo_detail').src = data['followers_url']
+    }
+    )
+
 </script>
 </body>
 </html>
